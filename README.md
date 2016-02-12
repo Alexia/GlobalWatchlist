@@ -9,9 +9,9 @@ These steps need to be done to make it overall compatible with MediaWiki 1.27+.
 
 ###Requirements
 * PHP 5.4+
-* [https://github.com/HydraWiki/RedisCache Extension:RedisCache]
+* [Extension:RedisCache](https://github.com/HydraWiki/RedisCache)
  * PHP Redis extension
-* [https://github.com/HydraWiki/SyncService Extension:SyncService]
+* [Extension:SyncService](https://github.com/HydraWiki/SyncService)
 
 ###This code is slow on large combined watchlists.
 Currently the watchlists and revision objects are serialized into Redis.  This means users with large combined watchlists, several hundred pages, will quickly hit the PHP memory limit.  The current suggested fixes are:
