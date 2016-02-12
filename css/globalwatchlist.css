@@ -1,0 +1,83 @@
+.mw-changeslist-site fieldset {
+	border: 1px solid #000000;
+	padding: 0 10px 10px;
+}
+
+.mw-changeslist-site legend {
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+	legend > span {
+		font-weight: normal;
+		margin-left: 10px;
+	}
+
+	legend .site_expand_collapse {
+		cursor: pointer;
+	}
+
+#collapse_expand_all {
+	cursor: pointer;
+}
+
+/* We should remove these changeslist definitions when moving to Mediawiki 1.23. */
+.mw-changeslist-legend {
+	float: right;
+	margin-left: 1em;
+	margin-bottom: 0.5em;
+	clear: right;
+	font-size: 85%;
+	line-height: 1.2em;
+	padding: 0.5em;
+	border: 1px solid #ddd;
+}
+
+.mw-changeslist-legend dl {
+	/* Parent element defines sufficient padding */
+	margin-bottom: 0;
+}
+
+.mw-changeslist-legend dt {
+	float: left;
+	margin-right: 0.5em;
+}
+
+.mw-changeslist-legend dd {
+	margin-left: 1.5em;
+	line-height: 1.3em;
+}
+
+fieldset.collasped .mw-changeslist {
+	display: none;
+}
+
+#sites_container {
+	border: 1px solid #000000;
+	height: 40em;
+	margin-bottom: 1em;
+	overflow: scroll;
+	padding: 5px;
+	width: 640px;
+}
+
+	#sites_container .hideable {
+		display: block;
+	}
+
+#inline_site_search {
+	margin-bottom: 5px;
+	width: 200px;
+}
+
+#site_search_form fieldset {
+	border: medium none;
+	margin: 0;
+	padding: 0;
+}
+
+.successbox.gwl {
+	display: inline-block;
+	float: none;
+	margin-bottom: 1em;
+}
