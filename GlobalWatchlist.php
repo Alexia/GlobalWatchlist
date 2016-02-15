@@ -61,5 +61,3 @@ $wgResourceModules['ext.globalwatchlist'] = [
 	'styles'        => ['css/globalwatchlist.css'],
 	'scripts'       => ['js/globalwatchlist.js'],
 ];
-
-$wgMessagesDirs['GlobalWatchlist'] = __DIR__ .'/i18n';
