@@ -48,7 +48,7 @@ $wgHooks['WatchArticleComplete'][]					= 'GlobalWatchlistHooks::onWatchArticleCo
 $wgHooks['UnwatchArticleComplete'][]				= 'GlobalWatchlistHooks::onUnwatchArticleComplete';
 $wgHooks['PageContentSaveComplete'][]				= 'GlobalWatchlistHooks::onPageContentSaveComplete';
 $wgHooks['PersonalUrls'][]							= 'GlobalWatchlistHooks::onPersonalUrls';
-if (MASTER_WIKI === true) {
+if (MASTER_WIKI === true || $wgSiteKey == 'master') {
 	$wgHooks['LoadExtensionSchemaUpdates'][] = 'GlobalWatchlistHooks::onLoadExtensionSchemaUpdates';
 }
 
