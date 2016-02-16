@@ -48,9 +48,9 @@ class GlobalWatchlistHooks {
 	 */
 	static public function init() {
 		if (!self::$initialized) {
-			global $dsSiteKey;
+			global $wgSiteKey;
 
-			self::$siteKey = $dsSiteKey;
+			self::$siteKey = $wgSiteKey;
 
 			self::$DB = wfGetDB(DB_MASTER);
 

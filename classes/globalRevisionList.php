@@ -41,9 +41,9 @@ class globalRevisionList {
 	 * @return	void
 	 */
 	public function __construct() {
-		global $dsSiteKey;
+		global $wgSiteKey;
 
-		$this->siteKey = $dsSiteKey;
+		$this->siteKey = $wgSiteKey;
 
 		$this->redis = RedisCache::getClient('cache');
 	}
