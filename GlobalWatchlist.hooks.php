@@ -72,8 +72,10 @@ class GlobalWatchlistHooks {
 		if (!$article->mDataLoaded) {
 			$article->loadPageData();
 		}
-		$curseUser = \CurseAuthUser::getInstance($user);
-		if (!$curseUser->getId() || $article->mTitle->mArticleID < 1) {
+
+		$lookup = CentralIdLookup::factory();
+		$globalId = $lookup->centralIdFromLocalUser($user, CentralIdLookup::AUDIENCE_RAW);
+		if (!$globalId || $article->mTitle->mArticleID < 1) {
 			return true;
 		}
 
@@ -108,8 +110,10 @@ class GlobalWatchlistHooks {
 		if (!$article->mDataLoaded) {
 			$article->loadPageData();
 		}
-		$curseUser = \CurseAuthUser::getInstance($user);
-		if (!$curseUser->getId() || $article->mTitle->mArticleID < 1) {
+
+		$lookup = CentralIdLookup::factory();
+		$globalId = $lookup->centralIdFromLocalUser($user, CentralIdLookup::AUDIENCE_RAW);
+		if (!$globalId || $article->mTitle->mArticleID < 1) {
 			return true;
 		}
 

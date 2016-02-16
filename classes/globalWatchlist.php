@@ -27,6 +27,13 @@ class globalWatchlist {
 	private $user;
 
 	/**
+	 * Global User ID
+	 *
+	 * @var		integer
+	 */
+	private $globalId;
+
+	/**
 	 * List of globally watched items.
 	 *
 	 * @var		array
@@ -84,13 +91,10 @@ class globalWatchlist {
 	 * @return	mixed	bool|user object
 	 */
 	static public function newFromUser(User $user) {
-		$curseUser = \CurseAuthUser::getInstance($user);
-		if (!$curseUser->getId()) {
+		$gwl = new self();
+		if (!$gwl->setUser($user)) {
 			return false;
 		}
-
-		$gwl = new self();
-		$gwl->setUser($user);
 
 		return $gwl;
 	}
@@ -117,7 +121,7 @@ class globalWatchlist {
 		$data = [
 			'user'		=> [
 				'mName'				=> $this->user->getName(),
-				'global_id'			=> \CurseAuthUser::getInstance($this->user)->getId()
+				'global_id'			=> $this->globalId
 			],
 			'article'	=> [
 				'mTextform'			=> $articleTitle->getText(),
@@ -177,11 +181,11 @@ class globalWatchlist {
 						//Clean up empty wiki watch lists.
 						unset($this->list[$siteKey]);
 						$this->redis->hDel($this->redisListKey, $siteKey);
-						gwlSync::queue(['site_key' => $siteKey, 'global_id' => \CurseAuthUser::getInstance($this->user)->getId(), 'list' => null, 'type' => 'list']);
+						gwlSync::queue(['site_key' => $siteKey, 'global_id' => $this->globalId, 'list' => null, 'type' => 'list']);
 						continue;
 					}
 					$args[$siteKey] = serialize($data);
-					gwlSync::queue(['site_key' => $siteKey, 'global_id' => \CurseAuthUser::getInstance($this->user)->getId(), 'list' => serialize($data), 'type' => 'list']);
+					gwlSync::queue(['site_key' => $siteKey, 'global_id' => $this->globalId, 'list' => serialize($data), 'type' => 'list']);
 				}
 				$this->redis->hMSet($this->redisListKey, $args);
 			}
@@ -281,7 +285,7 @@ class globalWatchlist {
 		array_unshift($siteKeys, $this->redisSitesKey);
 		$this->redis->del($this->redisSitesKey);
 		call_user_func_array([$this->redis, 'sAdd'], $siteKeys);
-		gwlSync::queue(['global_id' => \CurseAuthUser::getInstance($this->user)->getId(), 'site_keys' => serialize($this->visibleSites), 'type' => 'settings']);
+		gwlSync::queue(['global_id' => $this->globalId, 'site_keys' => serialize($this->visibleSites), 'type' => 'settings']);
 
 		return true;
 	}
@@ -304,9 +308,18 @@ class globalWatchlist {
 	 * @return	boolean Success
 	 */
 	public function setUser(User $user) {
+		$lookup = CentralIdLookup::factory();
+		$globalId = $lookup->centralIdFromLocalUser($user, CentralIdLookup::AUDIENCE_RAW);
+		if (!$globalId) {
+			return false;
+		}
+
 		$this->user = $user;
-		$this->redisListKey = 'globalwatchlist:list:'.\CurseAuthUser::getInstance($this->user)->getId();
-		$this->redisSitesKey = 'globalwatchlist:visibleSites:'.\CurseAuthUser::getInstance($this->user)->getId();
+		$this->globalId = $globalId;
+		$this->redisListKey = 'globalwatchlist:list:'.$this->globalId;
+		$this->redisSitesKey = 'globalwatchlist:visibleSites:'.$this->globalId;
+
+		return true;
 	}
 
 

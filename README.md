@@ -3,7 +3,6 @@ A watch list that aggregates watch lists from all wikis to any wiki on a single 
 
 ###Please Note: This code is alpha quality and contains code that will not work outside the Hydra Wiki Platform.
 These steps need to be done to make it overall compatible with MediaWiki 1.27+.
-* Replace calls to the CurseAuthUser class with the newer AuthManager CentralIdLookup calls.
 * The MASTER_WIKI define needs to be improved to not be dependent on Extension:DynamicSettings.
 * The $siteKey is a wiki identifier much like "enwiki" in farm setups.  While its functionality is based on Extension:DynamicSettings dictates it will generally accept an valid identifier.
 
